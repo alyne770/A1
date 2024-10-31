@@ -1,0 +1,80 @@
+﻿@model LivroDigital.Models.ManageLoginsViewModel
+@using Microsoft.Owin.Security
+@{
+    ViewBag.Title = "Gerenciar logins externos";
+}
+
+<main aria-labelledby="title" class="container my-4">
+    <h2 id="title" class="text-center text-success">@ViewBag.Title</h2>
+
+    <p class="text-success text-center">@ViewBag.StatusMessage</p>
+
+    @{
+        var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+        if (!loginProviders.Any())
+        {
+            <div class="text-center">
+                <p>
+                    Não há serviços de autenticação externos configurados. Veja <a href="https://go.microsoft.com/fwlink/?LinkId=313242">este artigo</a>
+                    para detalhes sobre como configurar este aplicativo ASP.NET para dar suporte ao logon por meio de serviços externos.
+                </p>
+            </div>
+        }
+        else
+        {
+            if (Model.CurrentLogins.Count > 0)
+            {
+                <h4 class="text-secondary">Logins registrados</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Provedor de Logon</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var account in Model.CurrentLogins)
+                        {
+                            <tr>
+                                <td>@account.LoginProvider</td>
+                                <td>
+                                    @if (ViewBag.ShowRemoveButton)
+                                    {
+                                        using (Html.BeginForm("RemoveLogin", "Manage", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.Hidden("loginProvider", account.LoginProvider)
+                                            @Html.Hidden("providerKey", account.ProviderKey)
+                                            <input type="submit" class="btn btn-outline-danger" value="Remover" title="Remova este logon @account.LoginProvider de sua conta" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @: &nbsp;
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            if (Model.OtherLogins.Count > 0)
+            {
+                <h4 class="text-secondary">Vincular novos logins</h4>
+                using (Html.BeginForm("LinkLogin", "Manage", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="d-flex justify-content-center flex-wrap">
+                        @foreach (AuthenticationDescription p in Model.OtherLogins)
+                        {
+                            <button type="submit" class="btn btn-outline-primary m-1" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Faça login usando sua conta @p.Caption">
+                                @p.AuthenticationType
+                            </button>
+                        }
+                    </div>
+                }
+            }
+        }
+    }
+</main>

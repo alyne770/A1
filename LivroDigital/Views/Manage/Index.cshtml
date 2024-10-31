@@ -1,0 +1,35 @@
+﻿@model LivroDigital.Models.IndexViewModel
+@{
+    ViewBag.Title = "Gerenciar Perfil";
+}
+
+<main aria-labelledby="title" class="container my-4">
+    <h2 id="title" class="text-center">@ViewBag.Title</h2>
+    <p class="text-success text-center">@ViewBag.StatusMessage</p>
+
+    <div class="border rounded shadow p-4">
+        <h4>Alterar as configurações de conta</h4>
+        <hr />
+        <dl class="row">
+            
+            <dd class="col-sm-9">
+                @if (Model.HasPassword)
+                {
+                    @Html.ActionLink("Alterar sua senha", "ChangePassword", new { @class = "btn btn-link" })
+                }
+                else
+                {
+                    @Html.ActionLink("Gerenciar Senha", "SetPassword", new { @class = "btn btn-link" })
+                }
+            </dd>
+            <dd class="col-sm-9">
+
+                @Html.ActionLink("Gerenciar Login Externo", "ManageLogins", new { @class = "btn btn-link" }) - @Model.Logins.Count
+            </dd>
+        </dl>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

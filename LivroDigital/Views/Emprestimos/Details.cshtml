@@ -1,0 +1,48 @@
+﻿@model LivroDigital.Models.Emprestimo
+
+@{
+    ViewBag.Title = "Detalhes do Empréstimo";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">@ViewBag.Title</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Livro.Titulo)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Livro.Titulo)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DataEmprestimo)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.DataEmprestimo)</dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Editora</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Livro.Editora.Nome)</dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Usuário</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Usuario.Nome)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DataDevolucao)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.DataDevolucao)</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                @Html.ActionLink("Editar", "Edit", new { id = Model.EmprestimoId }, new { @class = "btn btn-primary me-2" })
+                @Html.ActionLink("Voltar para a Lista", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿@model LivroDigital.Models.Livro
+
+@{
+    ViewBag.Title = "Criar Livro";
+}
+
+<div class="container my-4">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal border rounded shadow p-4">
+        <h4>Detalhes do Livro</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Titulo, "Título", htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AnoPublicacao, "Ano de Publicação", htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.EditorFor(model => model.AnoPublicacao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AnoPublicacao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ISBN, "ISBN", htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.EditorFor(model => model.ISBN, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EditoraId, "Editora", htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.DropDownList("EditoraId", new SelectList(ViewBag.Editoras, "EditoraId", "Nome"), "Selecione uma Editora", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EditoraId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Categoria(s)</label>
+            <div class="d-flex flex-wrap">
+                @foreach (var categoria in ViewBag.Categorias as List<LivroDigital.Models.Categoria>)
+                {
+                    <div class="form-check me-3">
+                        <input type="checkbox" name="SelectedCategorias" value="@categoria.CategoriaId" class="form-check-input" />
+                        <label class="form-check-label">@categoria.Nome</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Autor(es)</label>
+            <div class="d-flex flex-wrap">
+                @foreach (var autor in ViewBag.Autores as List<LivroDigital.Models.Autor>)
+                {
+                    <div class="form-check me-3">
+                        <input type="checkbox" name="SelectedAutores" value="@autor.AutorId" class="form-check-input" />
+                        <label class="form-check-label">@autor.Nome</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+        <br />
+
+        <div class="form-group">
+            <div class="d-flex justify-content-between">
+                <a href="@Url.Action("Index")" class="btn btn-secondary me-2">
+                    <i class="bi bi-arrow-left-circle"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LivroDigital.Models.Livro>
+
+@{
+    ViewBag.Title = "Livros";
+}
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="lead text-muted">Lista de Livros</h2>
+        <a href="@Url.Action("Create", "Livros")" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Novo Livro
+        </a>
+    </div>
+
+    <table class="table table-hover border shadow" style="border-radius: 0.5rem; overflow: hidden;">
+        <thead class="bg-dark table-success text-white">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Editora.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Titulo)</th>
+                <th>@Html.DisplayNameFor(model => model.AnoPublicacao)</th>
+                <th>@Html.DisplayNameFor(model => model.ISBN)</th>
+                <th>Categoria</th>
+                <th>Autor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@((Model.ToList().IndexOf(item) % 2 == 0) ? "table-light" : "")">
+                    <td>@Html.DisplayFor(modelItem => item.Editora.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AnoPublicacao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ISBN)</td>
+                    <td>
+                        @(item.Categorias != null && item.Categorias.Any()
+                            ? string.Join(", ", item.Categorias.Select(c => c.Nome))
+                            : "Sem categoria")
+                    </td>
+                    <td>
+                        @(item.Autores != null && item.Autores.Any()
+                            ? string.Join(", ", item.Autores.Select(c => c.Nome))
+                            : "Sem Autor")
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Edit", "Livros", new { id = item.LivroId })"
+                           class="btn btn-outline-success btn-sm mx-1" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", "Livros", new { id = item.LivroId })"
+                           class="btn btn-outline-danger btn-sm mx-1" title="Excluir">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />

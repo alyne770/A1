@@ -1,0 +1,69 @@
+﻿@model LivroDigital.Models.Emprestimo
+
+@{
+    ViewBag.Title = "Editar Empréstimo";
+}
+
+<div class="container my-4">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal border rounded shadow p-4">
+            <h4>Detalhes do Empréstimo</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.EmprestimoId)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LivroId, "Livro", htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.DropDownList("LivroId", new SelectList(ViewBag.Livros, "LivroId", "Titulo", Model.LivroId), "Selecione um Livro", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LivroId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UsuarioId, "Usuário", htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.DropDownList("UsuarioId", new SelectList(ViewBag.Usuarios, "UsuarioId", "Nome", Model.UsuarioId), "Selecione um Usuário", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DataEmprestimo, "Data do Empréstimo", htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.EditorFor(model => model.DataEmprestimo, new { htmlAttributes = new { @class = "form-control", @Value = Model.DataEmprestimo.ToString("yyyy-MM-dd") } })
+                    @Html.ValidationMessageFor(model => model.DataEmprestimo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DataDevolucao, "Data de Devolução", htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.EditorFor(model => model.DataDevolucao, new { htmlAttributes = new { @class = "form-control", @Value = Model.DataDevolucao?.ToString("yyyy-MM-dd") } })
+                    @Html.ValidationMessageFor(model => model.DataDevolucao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <div class="d-flex justify-content-between">
+                    <a href="@Url.Action("Index")" class="btn btn-secondary me-2">
+                        <i class="bi bi-arrow-left-circle"></i> Voltar
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,44 @@
+﻿@model LivroDigital.Models.ExternalLoginConfirmationViewModel
+@{
+    ViewBag.Title = "Registrar";
+}
+
+<main aria-labelledby="title" class="container my-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <section id="externalLoginConfirmationForm" class="border rounded shadow p-4">
+                <h2 id="title" class="text-center">@ViewBag.Title</h2>
+                <h3 class="text-center">Associe a sua conta @ViewBag.LoginProvider.</h3>
+
+                @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <h4 class="text-center">Formulário de associação</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <p class="text-info text-center">
+                        Você se autenticou com êxito com <strong>@ViewBag.LoginProvider</strong>.
+                        Insira um nome de usuário para este site abaixo e clique no botão Registrar para concluir
+                        o logon.
+                    </p>
+
+                    <div class="form-group">
+                        <strong>@Html.LabelFor(m => m.Email, new { @class = "control-label" })</strong>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Digite seu email", style = "max-width: 100%;" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-success w-100" value="Registrar" />
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

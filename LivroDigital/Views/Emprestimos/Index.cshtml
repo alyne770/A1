@@ -1,0 +1,53 @@
+﻿@model IEnumerable<LivroDigital.Models.Emprestimo>
+
+@{
+    ViewBag.Title = "Empréstimos";
+}
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="lead text-muted">Lista de Empréstimos de Livros</h2>
+        <a href="@Url.Action("Create", "Emprestimos")" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Novo Empréstimo
+        </a>
+    </div>
+
+    <table class="table table-hover border shadow" style="border-radius: 0.5rem; overflow: hidden;">
+        <thead class="bg-dark table-success text-white">
+            <tr>
+                <th>Livro</th>
+                <th>Usuário</th>
+                <th>@Html.DisplayNameFor(model => model.DataEmprestimo)</th>
+                <th>@Html.DisplayNameFor(model => model.DataDevolucao)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="@((Model.ToList().IndexOf(item) % 2 == 0) ? "table-light" : "")">
+                    <td>@Html.DisplayFor(modelItem => item.Livro.Titulo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Usuario.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DataEmprestimo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DataDevolucao)</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Emprestimos", new { id = item.EmprestimoId })"
+                           class="btn btn-outline-success btn-sm mx-1" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="@Url.Action("Details", "Emprestimos", new { id = item.EmprestimoId })"
+                           class="btn btn-outline-secondary btn-sm mx-1" title="Detalhes">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", "Emprestimos", new { id = item.EmprestimoId })"
+                           class="btn btn-outline-danger btn-sm mx-1" title="Excluir">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
