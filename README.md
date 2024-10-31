@@ -41,4 +41,17 @@ A aplicação possui ao menos seis entidades principais, com relações do tipo 
 1. *Clone o repositório*:
    ```bash
    git clone https://github.com/alyne770/A1.git
+### Configuração do Banco de Dados:
+
+2. **Verifique a String de Conexão**:
+   - Abra o arquivo `Web.config`, localizado na raiz do projeto.
+   - Encontre a configuração de `connectionStrings` e ajuste a string de conexão conforme necessário para apontar para o seu servidor SQL Server. 
+
+   Exemplo de string de conexão:
+   ```xml
+   <connectionStrings>
+       <add name="BibliotecaContext" 
+            connectionString="Server=SEU_SERVIDOR;Database=BibliotecaDB;User Id=SEU_USUARIO;Password=SUA_SENHA;"
+            providerName="System.Data.SqlClient" />
+   </connectionStrings>
    
