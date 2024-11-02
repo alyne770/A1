@@ -50,7 +50,7 @@ A aplicação possui ao menos seis entidades principais, com relações do tipo 
    Exemplo de string de conexão:
    ```xml
    <connectionStrings>
-       <add name="BibliotecaContext" 
+       <add name="dbLivro" 
             connectionString="Server=SEU_SERVIDOR;Database=BibliotecaDB;User Id=SEU_USUARIO;Password=SUA_SENHA;"
             providerName="System.Data.SqlClient" />
    </connectionStrings>
